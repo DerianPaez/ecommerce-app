@@ -29,3 +29,28 @@ body {
   -ms-overflow-style: none; /* para Internet Explorer y Edge */
   scrollbar-width: none; /* para Firefox */
 }
+
+.logo-area {
+  grid-area: logo;
+}
+
+.searchbar-area {
+  grid-area: searchbar;
+}
+
+.actions-area {
+  grid-area: actions;
+}
+
+.grid-navigation-areas {
+  grid-template-areas:
+    'logo  actions'
+    'searchbar searchbar';
+}
+
+@media screen and (min-width: 768px) {
+  .grid-navigation-areas {
+    grid-template-columns: max-content 1fr max-content;
+    grid-template-areas: 'logo searchbar actions';
+  }
+}

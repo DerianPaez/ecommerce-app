@@ -18,7 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={inter.className}>
         <Providers>
           <Navigation />
-          <main className='h-screen-minus-footer flex flex-col pt-[72px] w-full max-w-[1440px] mx-auto'>
+          <main className='h-screen-minus-footer flex flex-col pt-[129px] md:pt-[73px] w-full max-w-[1440px] mx-auto'>
             {children}
           </main>
           <Footer />

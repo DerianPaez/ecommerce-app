@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from '@nextui-org/react'
+import { Button, Input, User } from '@nextui-org/react'
 import Link from 'next/link'
 import { useState } from 'react'
 import Sidebar from '../sidebar'
@@ -98,17 +98,47 @@ export default function Navigation() {
   return (
     <>
       <header className='fixed w-full border-b-1 border-gray-900 p-4 lg:px-10'>
-        <div className='grid grid-flow-col items-center justify-between gap-4'>
-          <div className='grid grid-flow-col items-center gap-2'>
-            <Button onClick={toggleSidebar} isIconOnly variant='light'>
+        <div className='grid grid-navigation-areas items-center justify-between gap-4 md:gap-8'>
+          <div className='logo-area grid grid-flow-col items-center gap-4'>
+            <Button onClick={toggleSidebar} isIconOnly variant='flat'>
               H
             </Button>
             <Link href='/'>Ecommerce</Link>
           </div>
 
-          <Button onClick={() => alert('Signup')} color='primary' href='#' variant='flat'>
-            Registrate
-          </Button>
+          <div className='searchbar-area w-full'>
+            <Input
+              classNames={{
+                base: 'h-10 w-full',
+                mainWrapper: 'h-full',
+                input: 'text-small',
+                inputWrapper: 'h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20'
+              }}
+              variant='bordered'
+              placeholder='Buscar...'
+              size='md'
+              type='search'
+            />
+          </div>
+
+          <div className='actions-area grid grid-flow-col items-center gap-4'>
+            <User
+              name='Little Rat'
+              description='Frontend Developer'
+              avatarProps={{
+                src: 'https://i.pravatar.cc/150?u=a042581f4e29026704d'
+              }}
+              classNames={{
+                base: 'gap-0 sm:gap-2',
+                name: 'hidden sm:block',
+                description: 'hidden sm:block'
+              }}
+            />
+
+            <Button onClick={() => alert('Cart')} isIconOnly color='primary' variant='flat'>
+              C
+            </Button>
+          </div>
         </div>
       </header>
 
