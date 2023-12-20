@@ -1,5 +1,5 @@
-import type { Config } from 'tailwindcss'
 import { nextui } from '@nextui-org/react'
+import type { Config } from 'tailwindcss'
 
 const config: Config = {
   content: [
@@ -13,6 +13,9 @@ const config: Config = {
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))'
+      },
+      height: {
+        'screen-minus-footer': 'calc(100vh - 68.2px)'
       }
     }
   },
