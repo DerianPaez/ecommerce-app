@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import Footer from '../components/footer'
+import Navigation from '../components/navigation'
 import './globals.css'
 import { Providers } from './providers'
 
@@ -14,7 +16,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang='en' className='dark'>
       <body className={inter.className}>
-        <Providers>{children}</Providers>
+        <Providers>
+          <Navigation />
+          <main className='h-screen-minus-footer flex flex-col pt-[72px]'>{children}</main>
+          <Footer />
+        </Providers>
       </body>
     </html>
   )
