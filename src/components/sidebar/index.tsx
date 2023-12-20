@@ -9,7 +9,7 @@ export default function Sidebar({ categories, isOpen }: SidebarProps) {
     <nav
       className={`${
         isOpen ? 'block' : 'hidden'
-      } fixed top-[89px] left-4 lg:left-10 bg-black border border-gray-900 z-50 w-[240px] h-[calc(100%-105px)] overflow-y-scroll p-5 rounded-lg hide-scrollbar`}
+      } fixed top-[145px] md:top-[89px] left-4 lg:left-10 bg-black border border-gray-900 z-50 w-[240px] h-[calc(100%-161px)] md:h-[calc(100%-105px)] overflow-y-scroll p-5 rounded-lg hide-scrollbar`}
     >
       <ul className='grid gap-4'>
         {categories.map(({ id, label, href }) => {
