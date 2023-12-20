@@ -20,3 +20,12 @@ body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(to bottom, transparent, rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
 }
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* para navegadores basados en Webkit como Chrome y Safari */
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none; /* para Internet Explorer y Edge */
+  scrollbar-width: none; /* para Firefox */
+}
