@@ -1,5 +1,6 @@
 'use client'
 
+import { Bars3Icon, ShoppingCartIcon } from '@heroicons/react/24/outline'
 import { Button, Input, User } from '@nextui-org/react'
 import Link from 'next/link'
 import { useState } from 'react'
@@ -100,8 +101,8 @@ export default function Navigation() {
       <header className='fixed w-full border-b-1 border-gray-900 p-4 lg:px-10'>
         <div className='grid grid-navigation-areas items-center justify-between gap-4 md:gap-8'>
           <div className='logo-area grid grid-flow-col items-center gap-4'>
-            <Button onClick={toggleSidebar} isIconOnly variant='flat'>
-              H
+            <Button onClick={toggleSidebar} isIconOnly variant='flat' color='primary'>
+              <Bars3Icon className='h-6 w-6 text-primary-500' />
             </Button>
             <Link href='/'>Ecommerce</Link>
           </div>
@@ -136,7 +137,7 @@ export default function Navigation() {
             />
 
             <Button onClick={() => alert('Cart')} isIconOnly color='primary' variant='flat'>
-              C
+              <ShoppingCartIcon className='h-5 w-5 text-primary-500' />
             </Button>
           </div>
         </div>
