@@ -5,6 +5,7 @@ import { Button, Input, User } from '@nextui-org/react'
 import Link from 'next/link'
 import { useState } from 'react'
 import Sidebar from '../sidebar'
+import ThemeSwitcher from '../switch-theme'
 
 export default function Navigation() {
   const categories = [
@@ -123,6 +124,8 @@ export default function Navigation() {
           </div>
 
           <div className='actions-area grid grid-flow-col items-center gap-4'>
+            <ThemeSwitcher />
+
             <User
               name='Little Rat'
               description='Frontend Developer'
