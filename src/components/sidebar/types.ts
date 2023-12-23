@@ -1,6 +1,5 @@
 export type SidebarProps = {
   categories: Category[]
-  isOpen: boolean
 }
 
 export type Category = {
