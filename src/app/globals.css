@@ -2,26 +2,41 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: linear-gradient(to bottom, transparent, rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* para navegadores basados en Webkit como Chrome y Safari */
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none; /* para Internet Explorer y Edge */
+  scrollbar-width: none; /* para Firefox */
+}
+
+.logo-area {
+  grid-area: logo;
+}
+
+.searchbar-area {
+  grid-area: searchbar;
+}
+
+.actions-area {
+  grid-area: actions;
+}
+
+.grid-navigation-areas {
+  grid-template-areas:
+    'logo  actions'
+    'searchbar searchbar';
+}
+
+@media screen and (min-width: 768px) {
+  .grid-navigation-areas {
+    grid-template-columns: max-content 1fr max-content;
+    grid-template-areas: 'logo searchbar actions';
+  }
 }
