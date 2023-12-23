@@ -1,12 +1,15 @@
 'use client'
 
 import { ShoppingCartIcon } from '@heroicons/react/24/outline'
-import { Button, Input, User } from '@nextui-org/react'
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input, Skeleton, User } from '@nextui-org/react'
+import { signIn, signOut, useSession } from 'next-auth/react'
 import Link from 'next/link'
 import Sidebar from '../sidebar'
 import ThemeSwitcher from '../switch-theme'
 
 export default function Navigation() {
+  const { data: session, status } = useSession()
+
   const categories = [
     {
       id: '1',
@@ -95,10 +98,8 @@ export default function Navigation() {
       <div className='grid grid-navigation-areas items-center justify-between gap-4 md:gap-8'>
         <div className='logo-area grid grid-flow-col items-center gap-4'>
           <Sidebar categories={categories} />
-
           <Link href='/'>Ecommerce</Link>
         </div>
-
         <div className='searchbar-area w-full'>
           <Input
             classNames={{
@@ -113,22 +114,47 @@ export default function Navigation() {
             type='search'
           />
         </div>
-
         <div className='actions-area grid grid-flow-col items-center gap-4'>
           <ThemeSwitcher />
+          {status === 'authenticated' && (
+            <Dropdown>
+              <DropdownTrigger>
+                <User
+                  name={session?.user?.name}
+                  description={session?.user?.email}
+                  avatarProps={{
+                    src: session?.user?.image ?? ''
+                  }}
+                  classNames={{
+                    base: 'gap-0 sm:gap-2 cursor-pointer',
+                    name: 'hidden sm:block',
+                    description: 'hidden sm:block'
+                  }}
+                />
+              </DropdownTrigger>
+              <DropdownMenu>
+                <DropdownItem onClick={() => signOut()}>Cerrar Sesión</DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+          )}
 
-          <User
-            name='Little Rat'
-            description='Frontend Developer'
-            avatarProps={{
-              src: 'https://i.pravatar.cc/150?u=a042581f4e29026704d'
-            }}
-            classNames={{
-              base: 'gap-0 sm:gap-2',
-              name: 'hidden sm:block',
-              description: 'hidden sm:block'
-            }}
-          />
+          {status === 'unauthenticated' && (
+            <Button onClick={() => signIn()} color='primary' variant='flat'>
+              Iniciar Sesión
+            </Button>
+          )}
+
+          {status === 'loading' && (
+            <div className='w-full flex items-center gap-3'>
+              <div>
+                <Skeleton className='flex rounded-full w-10 h-10' />
+              </div>
+              <div className='w-full flex flex-col gap-2'>
+                <Skeleton className='h-3 w-28 rounded-lg' />
+                <Skeleton className='h-3 w-36 rounded-lg' />
+              </div>
+            </div>
+          )}
 
           <Button onClick={() => alert('Cart')} isIconOnly color='primary' variant='flat'>
             <ShoppingCartIcon className='h-5 w-5 text-primary-500' />
