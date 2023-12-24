@@ -1,5 +1,4 @@
-import { Bars3Icon } from '@heroicons/react/24/outline'
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react'
+import { NavbarMenu, NavbarMenuItem } from '@nextui-org/react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { SidebarProps } from './types'
@@ -8,28 +7,24 @@ export default function Sidebar({ categories }: SidebarProps) {
   const pathname = usePathname()
 
   return (
-    <Dropdown closeOnSelect placement='bottom-start'>
-      <DropdownTrigger>
-        <Button isIconOnly variant='flat' color='primary'>
-          <Bars3Icon className='h-6 w-6 text-primary-500' />
-        </Button>
-      </DropdownTrigger>
-      <DropdownMenu aria-label='Categorías' items={categories}>
-        {({ id, label, href }) => {
-          const isActive = pathname.includes(href)
+    <NavbarMenu
+      className='!h-[calc(100vh-129px)] md:!h-[calc(100vh-73px)] pl-4 md:pl-10 pb-8'
+      style={{ '--navbar-height': 'auto' } as React.CSSProperties}
+    >
+      {categories.map(({ id, label, href }) => {
+        const isActive = pathname.includes(href)
 
-          return (
-            <DropdownItem
-              key={id}
-              as={Link}
+        return (
+          <NavbarMenuItem key={id} isActive={isActive}>
+            <Link
               href={`/categoria/${href}`}
-              className={`${isActive ? 'text-primary-500' : ''}`}
+              className={`${isActive ? 'text-primary-500' : ''} hover:text-primary-500`}
             >
               {label}
-            </DropdownItem>
-          )
-        }}
-      </DropdownMenu>
-    </Dropdown>
+            </Link>
+          </NavbarMenuItem>
+        )
+      })}
+    </NavbarMenu>
   )
 }
