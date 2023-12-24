@@ -22,11 +22,12 @@ export default function ThemeSwitcher() {
   return (
     <Switch
       isSelected={resolvedTheme === 'dark'}
-      size='lg'
+      size='md'
+      classNames={{ wrapper: 'm-0' }}
       color='primary'
       onValueChange={(value) => setTheme(value ? 'dark' : 'light')}
       thumbIcon={({ isSelected, className }) => {
-        const classNames = `${className} h-4 h-4 text-gray-600`
+        const classNames = `${className} h-4 text-gray-600`
         return isSelected ? <BoltIcon className={classNames} /> : <MoonIcon className={classNames} />
       }}
     />
