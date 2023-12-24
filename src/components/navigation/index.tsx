@@ -1,14 +1,35 @@
 'use client'
 
 import { ShoppingCartIcon } from '@heroicons/react/24/outline'
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input, Skeleton, User } from '@nextui-org/react'
+import {
+  Button,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+  Input,
+  Navbar,
+  NavbarMenuToggle,
+  Skeleton,
+  User
+} from '@nextui-org/react'
 import { signIn, signOut, useSession } from 'next-auth/react'
+import { usePathname } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import Logo from '../logo'
 import Sidebar from '../sidebar'
 import ThemeSwitcher from '../switch-theme'
 
 export default function Navigation() {
+  const pathname = usePathname()
   const { data: session, status } = useSession()
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  useEffect(() => {
+    if (isMenuOpen) {
+      setIsMenuOpen(false)
+    }
+  }, [pathname])
 
   const categories = [
     {
@@ -94,10 +115,22 @@ export default function Navigation() {
   ]
 
   return (
-    <header className='fixed z-50 w-full border-b-1 border-gray-900 p-4 lg:px-10'>
-      <div className='grid grid-navigation-areas items-center justify-between gap-4 md:gap-8'>
+    <Navbar
+      isBlurred={false}
+      isMenuOpen={isMenuOpen}
+      onMenuOpenChange={setIsMenuOpen}
+      classNames={{ wrapper: 'max-w-full p-4 md:px-10 border-b border-divider' }}
+      style={{ '--navbar-height': 'auto' } as React.CSSProperties}
+    >
+      <div className='w-full grid grid-navigation-areas items-center justify-between gap-4 md:gap-8'>
         <div className='logo-area grid grid-flow-col items-center gap-3 md:gap-4'>
-          <Sidebar categories={categories} />
+          <NavbarMenuToggle
+            className='h-10 text-primary bg-primary/20'
+            as={Button}
+            isIconOnly
+            variant='flat'
+            aria-label={isMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
+          />
           <Logo />
         </div>
         <div className='searchbar-area w-full'>
@@ -169,6 +202,8 @@ export default function Navigation() {
           </Button>
         </div>
       </div>
-    </header>
+
+      <Sidebar categories={categories} />
+    </Navbar>
   )
 }
