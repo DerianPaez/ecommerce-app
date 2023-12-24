@@ -123,7 +123,8 @@ export default function Navigation() {
                   name={session?.user?.name}
                   description={session?.user?.email}
                   avatarProps={{
-                    src: session?.user?.image ?? ''
+                    src: session?.user?.image ?? '',
+                    isBordered: true
                   }}
                   classNames={{
                     base: 'gap-0 sm:gap-2 cursor-pointer',
@@ -149,7 +150,7 @@ export default function Navigation() {
               <div>
                 <Skeleton className='flex rounded-full w-10 h-10' />
               </div>
-              <div className='w-full flex flex-col gap-2'>
+              <div className='w-full hidden sm:flex flex-col gap-2'>
                 <Skeleton className='h-3 w-28 rounded-lg' />
                 <Skeleton className='h-3 w-36 rounded-lg' />
               </div>
