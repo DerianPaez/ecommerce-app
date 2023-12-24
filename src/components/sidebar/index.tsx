@@ -16,10 +16,7 @@ export default function Sidebar({ categories }: SidebarProps) {
 
         return (
           <NavbarMenuItem key={id} isActive={isActive}>
-            <Link
-              href={`/categoria/${href}`}
-              className={`${isActive ? 'text-primary-500' : ''} hover:text-primary-500`}
-            >
+            <Link href={`/categoria/${href}`} className={`${isActive ? 'text-primary' : ''} hover:text-primary`}>
               {label}
             </Link>
           </NavbarMenuItem>
