@@ -198,7 +198,7 @@ export default function Navigation() {
           )}
 
           <Button onClick={() => alert('Cart')} isIconOnly color='primary' variant='flat'>
-            <ShoppingCartIcon className='h-5 w-5 text-primary-500' />
+            <ShoppingCartIcon className='h-5 w-5 text-primary' />
           </Button>
         </div>
       </div>
