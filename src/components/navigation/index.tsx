@@ -3,7 +3,7 @@
 import { ShoppingCartIcon } from '@heroicons/react/24/outline'
 import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input, Skeleton, User } from '@nextui-org/react'
 import { signIn, signOut, useSession } from 'next-auth/react'
-import Link from 'next/link'
+import Logo from '../logo'
 import Sidebar from '../sidebar'
 import ThemeSwitcher from '../switch-theme'
 
@@ -94,11 +94,11 @@ export default function Navigation() {
   ]
 
   return (
-    <header className='fixed w-full border-b-1 border-gray-900 p-4 lg:px-10'>
+    <header className='fixed z-50 w-full border-b-1 border-gray-900 p-4 lg:px-10'>
       <div className='grid grid-navigation-areas items-center justify-between gap-4 md:gap-8'>
-        <div className='logo-area grid grid-flow-col items-center gap-4'>
+        <div className='logo-area grid grid-flow-col items-center gap-3 md:gap-4'>
           <Sidebar categories={categories} />
-          <Link href='/'>Ecommerce</Link>
+          <Logo />
         </div>
         <div className='searchbar-area w-full'>
           <Input
@@ -114,8 +114,9 @@ export default function Navigation() {
             type='search'
           />
         </div>
-        <div className='actions-area grid grid-flow-col items-center gap-4'>
+        <div className='actions-area grid grid-flow-col items-center gap-3 md:gap-4'>
           <ThemeSwitcher />
+
           {status === 'authenticated' && (
             <Dropdown>
               <DropdownTrigger>
@@ -140,9 +141,15 @@ export default function Navigation() {
           )}
 
           {status === 'unauthenticated' && (
-            <Button onClick={() => signIn()} color='primary' variant='flat'>
-              Iniciar Sesión
-            </Button>
+            <>
+              <Button onClick={() => signIn()} color='primary' variant='flat' className='hidden md:block'>
+                Iniciar sesión
+              </Button>
+
+              <Button onClick={() => signIn()} color='primary' variant='flat' size='md' className='flex md:hidden'>
+                Entrar
+              </Button>
+            </>
           )}
 
           {status === 'loading' && (
@@ -150,7 +157,7 @@ export default function Navigation() {
               <div>
                 <Skeleton className='flex rounded-full w-10 h-10' />
               </div>
-              <div className='w-full hidden sm:flex flex-col gap-2'>
+              <div className='hidden sm:flex w-full flex-col gap-2'>
                 <Skeleton className='h-3 w-28 rounded-lg' />
                 <Skeleton className='h-3 w-36 rounded-lg' />
               </div>
