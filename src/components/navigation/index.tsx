@@ -2,6 +2,7 @@
 
 import { ShoppingCartIcon } from '@heroicons/react/24/outline'
 import {
+  Badge,
   Button,
   Dropdown,
   DropdownItem,
@@ -14,6 +15,7 @@ import {
   User
 } from '@nextui-org/react'
 import { signIn, signOut, useSession } from 'next-auth/react'
+import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import Logo from '../logo'
@@ -151,7 +153,7 @@ export default function Navigation() {
           <ThemeSwitcher />
 
           {status === 'authenticated' && (
-            <Dropdown>
+            <Dropdown offset={12}>
               <DropdownTrigger>
                 <User
                   name={session?.user?.name}
@@ -197,9 +199,11 @@ export default function Navigation() {
             </div>
           )}
 
-          <Button onClick={() => alert('Cart')} isIconOnly color='primary' variant='flat'>
-            <ShoppingCartIcon className='h-5 w-5 text-primary' />
-          </Button>
+          <Badge content={2} variant='flat' shape='circle' showOutline={false} color='primary'>
+            <Button as={Link} href='/carrito' isIconOnly color='primary' variant='flat'>
+              <ShoppingCartIcon className='h-5 w-5 text-primary' />
+            </Button>
+          </Badge>
         </div>
       </div>
 
