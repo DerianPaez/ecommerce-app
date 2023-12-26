@@ -16,6 +16,9 @@ const config: Config = {
       },
       height: {
         'screen-minus-footer': 'calc(100vh - 68.2px)'
+      },
+      gridTemplateRows: {
+        layout: 'auto 1fr auto'
       }
     }
   },
