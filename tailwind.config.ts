@@ -17,8 +17,12 @@ const config: Config = {
       height: {
         'screen-minus-footer': 'calc(100vh - 68.2px)'
       },
+      gridTemplateColumns: {
+        'cart-item': 'max-content 1fr',
+        cart: '3fr max-content'
+      },
       gridTemplateRows: {
-        layout: 'auto 1fr auto'
+        layout: 'max-content 1fr max-content'
       }
     }
   },
