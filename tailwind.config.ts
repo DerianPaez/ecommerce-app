@@ -10,16 +10,17 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      gridTemplateColumns: {
+        'product-auto-fit': 'repeat(auto-fit, minmax(280px, 1fr))',
+        'cart-item': 'max-content 1fr',
+        cart: '3fr max-content'
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))'
       },
       height: {
         'screen-minus-footer': 'calc(100vh - 68.2px)'
-      },
-      gridTemplateColumns: {
-        'cart-item': 'max-content 1fr',
-        cart: '3fr max-content'
       },
       gridTemplateRows: {
         layout: 'max-content 1fr max-content'
