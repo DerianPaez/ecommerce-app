@@ -33,7 +33,12 @@ export default function Cart() {
           </CardBody>
         </Card>
 
-        <CartSummary className='w-full md:w-[320px] h-max' subtotal={1179.95} shipping={50.0} total={1229.95} />
+        <CartSummary
+          className='w-full md:w-[240px] lg:w-[320px] h-max'
+          subtotal={1179.95}
+          shipping={50.0}
+          total={1229.95}
+        />
       </div>
     </div>
   )
