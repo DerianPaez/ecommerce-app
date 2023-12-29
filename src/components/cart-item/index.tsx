@@ -30,7 +30,7 @@ export default function CartItem({ id, name, price, image }: CartItemProps) {
             src={image}
             width={500}
             height={500}
-            alt='Intel Core i9 (12th Gen)'
+            alt={name}
             className='h-full w-full object-cover object-center place-items-center'
           />
         </figure>
