@@ -6,6 +6,7 @@ import {
   Card,
   CardBody,
   CardHeader,
+  Link,
   Modal,
   ModalBody,
   ModalContent,
@@ -39,7 +40,9 @@ export default function CartItem({ id, name, price, image }: CartItemProps) {
       <CardBody className='w-full grid gap-4 grid-flow-row auto-rows-max'>
         <div>
           <div className='lg:grid lg:grid-flow-col lg:gap-4 lg:auto-cols-max lg:justify-between'>
-            <h3 className='text-lg font-semibold'>{name}</h3>
+            <Link href={id} color='foreground' underline='hover' className='text-sm  cursor-pointer'>
+              <h3 className='text-lg font-semibold'>{name}</h3>
+            </Link>
             <span className='text-xl font-semibold'>$ {Number((price * count).toFixed(2))}</span>
           </div>
           {price !== Number((price * count).toFixed(2)) && <span>$ {price}</span>}

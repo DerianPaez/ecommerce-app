@@ -1,7 +1,7 @@
 'use client'
 
 import { MinusIcon, PlusIcon } from '@heroicons/react/24/outline'
-import { Button, Input } from '@nextui-org/react'
+import { Button } from '@nextui-org/react'
 import { useEffect, useState } from 'react'
 import { CounterProps } from './type'
 
@@ -24,14 +24,9 @@ export default function Counter({ className, min = 0, max = Infinity, onCountCha
       <Button isIconOnly variant='flat' onPress={handleDecrement} disabled={count <= min || disabled}>
         <MinusIcon className='h-4 w-4' />
       </Button>
-      <Input
-        size='sm'
-        value={count.toString() ?? 0}
-        type='number'
-        variant='faded'
-        onValueChange={(value) => setCount(parseInt(value))}
-        classNames={{ inputWrapper: 'h-10 w-12 md:w-20', input: 'text-center' }}
-      />
+      <span className='text-sm font-semibold border border-divider px-4 h-full rounded-xl flex justify-center items-center'>
+        {count}
+      </span>
       <Button isIconOnly variant='flat' onPress={handleIncrement} disabled={count >= max || disabled}>
         <PlusIcon className='h-4 w-4' />
       </Button>
