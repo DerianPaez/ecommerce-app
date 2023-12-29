@@ -6,7 +6,7 @@ export default function ProductDetails() {
     <div className='p-4 md:px-10 h-full grid items-center'>
       <div className='grid gap-8 md:grid-cols-2 items-center h-full'>
         <figure className='grid justify-center items-center'>
-          <Image src='/' width={500} height={500} alt='Intel Core i9 (12th Gen)' />
+          <Image src='/productId.jpg' width={500} height={500} alt='Intel Core i9 (12th Gen)' />
         </figure>
 
         <div className='grid gap-4 grid-flow-row auto-rows-max'>
