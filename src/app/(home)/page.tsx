@@ -30,7 +30,11 @@ export default function Home() {
 
   return (
     <div className='p-4 md:px-10 py-10'>
-      <ProductCard products={products} />
+      <div className='grid grid-cols-product-auto-fit gap-4'>
+        {products.map(({ id, name, image, price }) => (
+          <ProductCard key={id} id={id} name={name} image={image} price={price} />
+        ))}
+      </div>
     </div>
   )
 }
