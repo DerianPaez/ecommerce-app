@@ -1,6 +1,6 @@
 'use client'
 
-import { ShoppingCartIcon } from '@heroicons/react/24/outline'
+import { HeartIcon, ShoppingCartIcon } from '@heroicons/react/24/outline'
 import {
   Badge,
   Button,
@@ -201,9 +201,17 @@ export default function Navigation() {
 
           <Badge content={2} variant='flat' shape='circle' showOutline={false} color='primary'>
             <Button as={Link} href='/carrito' isIconOnly color='primary' variant='flat'>
-              <ShoppingCartIcon className='h-5 w-5 text-primary' />
+              <ShoppingCartIcon className='h-5 w-5' />
             </Button>
           </Badge>
+
+          {status === 'authenticated' && (
+            <Badge content={3} variant='flat' shape='circle' showOutline={false} color='primary'>
+              <Button as={Link} href='/favoritos' isIconOnly color='primary' variant='flat'>
+                <HeartIcon className=' h-6 w-6' />
+              </Button>
+            </Badge>
+          )}
         </div>
       </div>
 
