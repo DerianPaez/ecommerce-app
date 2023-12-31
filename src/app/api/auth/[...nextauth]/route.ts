@@ -1,7 +1,12 @@
+import prisma from '@/app/lib/prisma'
+import { PrismaAdapter } from '@auth/prisma-adapter'
+import { AuthOptions } from 'next-auth'
+import { Adapter } from 'next-auth/adapters'
 import NextAuth from 'next-auth/next'
 import GoogleProvider from 'next-auth/providers/google'
 
-const handler = NextAuth({
+const authOptions: AuthOptions = {
+  adapter: PrismaAdapter(prisma) as Adapter,
   pages: {
     signIn: '/auth/signin',
     error: '/auth/error'
@@ -21,5 +26,7 @@ const handler = NextAuth({
     // })
   ]
   // secret: process.env.JWT_SECRET
-})
+}
+
+const handler = NextAuth(authOptions)
 export { handler as GET, handler as POST }
