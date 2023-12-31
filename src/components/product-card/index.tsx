@@ -1,12 +1,24 @@
 'use client'
 
+import { HeartIcon } from '@heroicons/react/24/outline'
+import { HeartIcon as HeartSolidIcon } from '@heroicons/react/24/solid'
 import { Button, Card, CardBody, CardFooter, CardHeader } from '@nextui-org/react'
+import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 import { ProductCardProps } from './types'
 
-export default function ProductCard({ id, image, name, price }: ProductCardProps) {
+export default function ProductCard({ id, image, name, price, isFavorite }: ProductCardProps) {
   const router = useRouter()
+  const { status } = useSession()
+  const [isFavoriteProduct, setIsFavoriteProduct] = useState(isFavorite)
+
+  const handleFavoriteClick = () => {
+    const previousFavoriteStatus = isFavoriteProduct
+    const newFavoriteStatus = !isFavoriteProduct
+    setIsFavoriteProduct(newFavoriteStatus)
+  }
 
   return (
     <Card
@@ -28,10 +40,19 @@ export default function ProductCard({ id, image, name, price }: ProductCardProps
         <h3 className='text-left text-lg font-semibold'>{name}</h3>
         <p className='text-left text-xl font-bold'>$ {price}</p>
       </CardBody>
-      <CardFooter className='pt-0'>
-        <Button className='w-full' color='primary' variant='flat'>
+      <CardFooter className='pt-0 gap-2 justify-between'>
+        <Button fullWidth={status !== 'authenticated'} color='primary' variant='flat'>
           Añadir al carrito
         </Button>
+        {status === 'authenticated' && (
+          <Button onPress={handleFavoriteClick} isIconOnly variant='light'>
+            {isFavoriteProduct ? (
+              <HeartSolidIcon className='text-red-500 h-6 w-6' />
+            ) : (
+              <HeartIcon className='text-red-500 h-6 w-6' />
+            )}
+          </Button>
+        )}
       </CardFooter>
     </Card>
   )
