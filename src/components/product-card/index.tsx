@@ -1,6 +1,6 @@
 'use client'
 
-import { HeartIcon } from '@heroicons/react/24/outline'
+import { HeartIcon, ShoppingCartIcon } from '@heroicons/react/24/outline'
 import { HeartIcon as HeartSolidIcon } from '@heroicons/react/24/solid'
 import { Button, Card, CardBody, CardFooter, CardHeader } from '@nextui-org/react'
 import { useSession } from 'next-auth/react'
@@ -41,7 +41,12 @@ export default function ProductCard({ id, image, name, price, isFavorite }: Prod
         <p className='text-left text-xl font-bold'>$ {price}</p>
       </CardBody>
       <CardFooter className='pt-0 gap-2 justify-between'>
-        <Button fullWidth={status !== 'authenticated'} color='primary' variant='flat'>
+        <Button
+          fullWidth={status !== 'authenticated'}
+          color='primary'
+          variant='flat'
+          startContent={<ShoppingCartIcon className='h-5 w-5' />}
+        >
           Añadir al carrito
         </Button>
         {status === 'authenticated' && (

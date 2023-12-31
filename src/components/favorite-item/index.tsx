@@ -1,6 +1,6 @@
 'use client'
 
-import { TrashIcon } from '@heroicons/react/24/outline'
+import { ShoppingCartIcon, TrashIcon } from '@heroicons/react/24/outline'
 import {
   Button,
   Card,
@@ -45,7 +45,7 @@ export default function FavoriteItem({ id, name, price, image }: FavoriteItemPro
         </div>
 
         <div className='grid gap-4 lg:grid-flow-col lg:auto-cols-max lg:justify-between'>
-          <Button color='primary' variant='flat'>
+          <Button color='primary' variant='flat' startContent={<ShoppingCartIcon className='h-5 w-5' />}>
             Añadir al carrito
           </Button>
 

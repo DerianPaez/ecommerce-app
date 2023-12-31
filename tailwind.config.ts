@@ -34,14 +34,14 @@ const config: Config = {
         dark: {
           colors: {
             primary: {
-              DEFAULT: 'red'
+              DEFAULT: '#FFF'
             }
           }
         },
         light: {
           colors: {
             primary: {
-              DEFAULT: 'red'
+              DEFAULT: 'foreground'
             }
           }
         }
