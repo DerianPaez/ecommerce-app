@@ -11,6 +11,9 @@ const authOptions: AuthOptions = {
     signIn: '/auth/signin',
     error: '/auth/error'
   },
+  session: {
+    strategy: 'jwt'
+  },
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
