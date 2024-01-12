@@ -20,7 +20,7 @@ export default function Counter({ className, min = 0, max = Infinity, onCountCha
   const handleDecrement = () => setCount((prev) => Math.max(prev - 1, min))
 
   return (
-    <div className={`${className} grid grid-flow-col auto-cols-max items-center gap-2`}>
+    <div className={`${className} grid grid-flow-col auto-cols-max items-center gap-1`}>
       <Button isIconOnly variant='flat' onPress={handleDecrement} disabled={count <= min || disabled}>
         <MinusIcon className='h-4 w-4' />
       </Button>

@@ -11,7 +11,7 @@ const config: Config = {
   theme: {
     extend: {
       gridTemplateColumns: {
-        'product-auto-fit': 'repeat(auto-fit, minmax(280px, 1fr))',
+        'product-auto-fill': 'repeat(auto-fill, minmax(280px, 1fr))',
         'cart-item': 'max-content 1fr',
         cart: '3fr max-content'
       },

@@ -10,7 +10,7 @@ export function ProductList() {
     loadProducts()
   }, [])
   return (
-    <div className='grid grid-cols-product-auto-fit gap-4'>
+    <div className='grid grid-cols-product-auto-fill gap-4'>
       {products.map(({ id, name, imageUrls, price, isFavorite }) => (
         <ProductCard key={id} id={id} name={name} image={imageUrls[0]} price={price} isFavorite={isFavorite} />
       ))}
