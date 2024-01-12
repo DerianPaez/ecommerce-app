@@ -32,8 +32,8 @@ export default function ProductCard({ id, image, name, price, isFavorite }: Prod
       shadow='none'
     >
       <CardHeader>
-        <figure className='grid justify-center items-center rounded-xl overflow-hidden h-72'>
-          <Image src={image} width={500} height={500} alt={name} className='w-full h-full object-cover object-center' />
+        <figure className='w-full grid justify-center items-center rounded-xl overflow-hidden h-72 relative'>
+          <Image src={image} alt={name} fill className='w-full h-full object-cover object-center' />
         </figure>
       </CardHeader>
       <CardBody className='grid gap-1 auto-rows-max'>

@@ -24,22 +24,21 @@ export default function CartItem({ id, name, price, image }: CartItemProps) {
   const [count, setCount] = useState(1)
 
   return (
-    <Card id={id} shadow='none' as='article' className='grid sm:grid-cols-cart-item items-center'>
+    <Card
+      id={id}
+      shadow='none'
+      as='article'
+      className='grid sm:grid-cols-cart-item items-start auto-rows-max grid-flow-row'
+    >
       <CardHeader>
-        <figure className='w-full h-72 sm:w-28 sm:h-28 flex justify-center items-center rounded-xl border border-divider overflow-hidden'>
-          <Image
-            src={image}
-            width={500}
-            height={500}
-            alt={name}
-            className='h-full w-full object-cover object-center place-items-center'
-          />
+        <figure className='w-full h-72 sm:w-28 sm:h-28 flex justify-center items-center rounded-xl border border-divider overflow-hidden relative'>
+          <Image src={image} fill alt={name} className='h-full w-full object-cover object-center place-items-center' />
         </figure>
       </CardHeader>
 
-      <CardBody className='w-full grid gap-4 grid-flow-row auto-rows-max'>
+      <CardBody className='w-full grid gap-4 grid-flow-row auto-rows-max self-center'>
         <div>
-          <div className='lg:grid lg:grid-flow-col lg:gap-4 lg:auto-cols-max lg:justify-between'>
+          <div className='grid g-full lg:grid-flow-col gap-0 lg:gap-4 lg:justify-between'>
             <Link href={id} color='foreground' underline='hover' className='text-sm  cursor-pointer'>
               <h3 className='text-lg font-semibold'>{name}</h3>
             </Link>
@@ -48,11 +47,14 @@ export default function CartItem({ id, name, price, image }: CartItemProps) {
           {price !== Number((price * count).toFixed(2)) && <span>$ {price}</span>}
         </div>
 
-        <div className='grid gap-4 lg:grid-flow-col lg:auto-cols-max lg:justify-between'>
+        <div className='grid gap-2 grid-flow-col auto-cols-max justify-between'>
           <Counter value={count} onCountChange={(value) => setCount(value)} min={1} />
+          <Button onPress={onOpen} color='danger' variant='flat' isIconOnly className='lg:hidden'>
+            <TrashIcon className='h-5 w-5' />
+          </Button>
           <Button
             onPress={onOpen}
-            className='w-max'
+            className='w-max hidden lg:flex'
             color='danger'
             variant='flat'
             startContent={<TrashIcon className='h-5 w-5' />}
