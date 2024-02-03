@@ -1,5 +1,6 @@
 'use client'
 
+import { useCart } from '@/context/cart-context'
 import { HeartIcon, ShoppingCartIcon } from '@heroicons/react/24/outline'
 import { HeartIcon as HeartSolidIcon } from '@heroicons/react/24/solid'
 import { Button, Card, CardBody, CardFooter, CardHeader } from '@nextui-org/react'
@@ -13,6 +14,7 @@ export default function ProductCard({ id, image, name, price, isFavorite }: Prod
   const router = useRouter()
   const { status } = useSession()
   const [isFavoriteProduct, setIsFavoriteProduct] = useState(isFavorite)
+  const { addToCart } = useCart()
 
   const handleFavoriteClick = () => {
     const previousFavoriteStatus = isFavoriteProduct
@@ -42,6 +44,7 @@ export default function ProductCard({ id, image, name, price, isFavorite }: Prod
       </CardBody>
       <CardFooter className='pt-0 gap-2 justify-between'>
         <Button
+          onPress={() => addToCart(id)}
           fullWidth={status !== 'authenticated'}
           color='primary'
           variant='flat'
