@@ -1,5 +1,6 @@
 'use client'
 
+import { useCart } from '@/context/cart-context'
 import { HeartIcon, ShoppingCartIcon } from '@heroicons/react/24/outline'
 import {
   Badge,
@@ -26,6 +27,7 @@ export default function Navigation() {
   const pathname = usePathname()
   const { data: session, status } = useSession()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const { cart } = useCart()
 
   useEffect(() => {
     if (isMenuOpen) {
@@ -199,7 +201,7 @@ export default function Navigation() {
             </div>
           )}
 
-          <Badge content={2} variant='flat' shape='circle' showOutline={false} color='primary'>
+          <Badge content={cart.length} variant='flat' shape='circle' showOutline={false} color='primary'>
             <Button as={Link} href='/carrito' isIconOnly color='primary' variant='flat'>
               <ShoppingCartIcon className='h-5 w-5' />
             </Button>

@@ -3,4 +3,6 @@ export type CartItemProps = {
   name: string
   price: number
   image: string
+  productId: string
+  quantity: number
 }

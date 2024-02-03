@@ -1,5 +1,7 @@
 'use client'
 
+import { useCart } from '@/context/cart-context'
+import { useDebounce } from '@/hooks/useDobounce.hook'
 import { TrashIcon } from '@heroicons/react/24/outline'
 import {
   Button,
@@ -15,13 +17,19 @@ import {
   useDisclosure
 } from '@nextui-org/react'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Counter from '../counter'
 import { CartItemProps } from './types'
 
-export default function CartItem({ id, name, price, image }: CartItemProps) {
+export default function CartItem({ id, name, price, image, productId, quantity }: CartItemProps) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
-  const [count, setCount] = useState(1)
+  const [count, setCount] = useState(quantity)
+  const debouncedCount = useDebounce(count, 1000)
+  const { removeFromCart, updateQuantity } = useCart()
+
+  useEffect(() => {
+    if (quantity !== count) updateQuantity(productId, debouncedCount)
+  }, [debouncedCount])
 
   return (
     <Card
@@ -73,7 +81,14 @@ export default function CartItem({ id, name, price, image }: CartItemProps) {
                     <Button color='default' variant='light' onPress={onClose}>
                       Cancelar
                     </Button>
-                    <Button color='danger' variant='flat' onPress={onClose}>
+                    <Button
+                      color='danger'
+                      variant='flat'
+                      onPress={() => {
+                        removeFromCart(productId)
+                        onClose()
+                      }}
+                    >
                       Eliminar
                     </Button>
                   </ModalFooter>

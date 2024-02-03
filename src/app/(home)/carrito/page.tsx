@@ -1,33 +1,29 @@
+'use client'
+
 import CartItem from '@/components/cart-item'
 import CartSummary from '@/components/cart-summary'
+import { useCart } from '@/context/cart-context'
 import { Card, CardBody, Divider } from '@nextui-org/react'
 import { Fragment } from 'react'
 
-const cartItems = [
-  {
-    id: '1',
-    name: 'Procesador AMD Ryzen 5 5600X',
-    price: 299.99,
-    image: '/productId.jpg'
-  },
-  {
-    id: '2',
-    name: 'Tarjeta Gráfica NVIDIA RTX 3070',
-    price: 499.99,
-    image: '/productId.jpg'
-  }
-]
-
 export default function Cart() {
+  const { cart } = useCart()
   return (
     <div className='p-4 md:px-10 py-10'>
       <div className='grid gap-10 md:grid-cols-cart'>
-        <Card shadow='none' className='border border-divider'>
+        <Card shadow='none' className='border border-divider h-max'>
           <CardBody className='grid gap-4'>
-            {cartItems.map(({ id, name, image, price }, index) => (
+            {cart.map(({ id, product: { name, imageUrls, price }, productId, quantity }, index) => (
               <Fragment key={id}>
-                <CartItem id={id} name={name} image={image} price={price} />
-                {index !== cartItems.length - 1 && <Divider />}
+                <CartItem
+                  id={id}
+                  name={name}
+                  image={imageUrls[0]}
+                  price={price}
+                  productId={productId}
+                  quantity={quantity}
+                />
+                {index !== cart.length - 1 && <Divider />}
               </Fragment>
             ))}
           </CardBody>
