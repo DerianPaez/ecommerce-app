@@ -4,4 +4,5 @@ export type ProductCardProps = {
   price: number
   image: string
   isFavorite?: boolean
+  isLoading?: boolean
 }
