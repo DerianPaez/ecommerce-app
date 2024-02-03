@@ -201,7 +201,14 @@ export default function Navigation() {
             </div>
           )}
 
-          <Badge content={cart.length} variant='flat' shape='circle' showOutline={false} color='primary'>
+          <Badge
+            content={cart.length}
+            isInvisible={cart.length === 0}
+            variant='flat'
+            shape='circle'
+            showOutline={false}
+            color='primary'
+          >
             <Button as={Link} href='/carrito' isIconOnly color='primary' variant='flat'>
               <ShoppingCartIcon className='h-5 w-5' />
             </Button>
