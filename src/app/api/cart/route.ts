@@ -90,6 +90,9 @@ export async function DELETE(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams
   const productId = searchParams.get('productId') || undefined
 
+  const token = await getToken({ req: request })
+  const userId = token?.sub
+
   if (!productId) {
     return NextResponse.json({ message: 'Cart id invalid' }, { status: 400 })
   }
@@ -97,7 +100,8 @@ export async function DELETE(request: NextRequest) {
   try {
     const existingCartItem = await prisma.cartItem.findUnique({
       where: {
-        productId
+        productId,
+        userId
       }
     })
 
