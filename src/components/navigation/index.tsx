@@ -1,6 +1,7 @@
 'use client'
 
 import { useCart } from '@/context/cart-context'
+import { useProducts } from '@/context/products-context'
 import { HeartIcon, ShoppingCartIcon } from '@heroicons/react/24/outline'
 import {
   Badge,
@@ -28,6 +29,8 @@ export default function Navigation() {
   const { data: session, status } = useSession()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const { cart } = useCart()
+  const { products } = useProducts()
+  const favoriteProducts = products.filter((product) => product.isFavorite)
 
   useEffect(() => {
     if (isMenuOpen) {
@@ -215,7 +218,14 @@ export default function Navigation() {
           </Badge>
 
           {status === 'authenticated' && (
-            <Badge content={3} variant='flat' shape='circle' showOutline={false} color='primary'>
+            <Badge
+              content={favoriteProducts.length}
+              isInvisible={favoriteProducts.length === 0}
+              variant='flat'
+              shape='circle'
+              showOutline={false}
+              color='primary'
+            >
               <Button as={Link} href='/favoritos' isIconOnly color='primary' variant='flat'>
                 <HeartIcon className=' h-6 w-6' />
               </Button>
