@@ -1,25 +1,31 @@
 'use client'
 
 import { useCart } from '@/context/cart-context'
+import { useProducts } from '@/context/products-context'
+import { useDebounce } from '@/hooks/useDobounce.hook'
 import { HeartIcon, ShoppingCartIcon } from '@heroicons/react/24/outline'
 import { HeartIcon as HeartSolidIcon } from '@heroicons/react/24/solid'
 import { Button, Card, CardBody, CardFooter, CardHeader } from '@nextui-org/react'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ProductCardProps } from './types'
 
-export default function ProductCard({ id, image, name, price, isFavorite }: ProductCardProps) {
+export default function ProductCard({ id, image, name, price, isFavorite = false }: ProductCardProps) {
   const router = useRouter()
   const { status } = useSession()
-  const [isFavoriteProduct, setIsFavoriteProduct] = useState(isFavorite)
   const { addToCart } = useCart()
+  const { markAsFavorite } = useProducts()
+  const [isFavoriteProduct, setIsFavoriteProduct] = useState(isFavorite)
+  const debouncedFavorite = useDebounce(isFavoriteProduct)
+
+  useEffect(() => {
+    if (isFavorite !== isFavoriteProduct) markAsFavorite(id, debouncedFavorite)
+  }, [debouncedFavorite])
 
   const handleFavoriteClick = () => {
-    const previousFavoriteStatus = isFavoriteProduct
-    const newFavoriteStatus = !isFavoriteProduct
-    setIsFavoriteProduct(newFavoriteStatus)
+    setIsFavoriteProduct(!isFavoriteProduct)
   }
 
   return (
@@ -53,7 +59,13 @@ export default function ProductCard({ id, image, name, price, isFavorite }: Prod
           Añadir al carrito
         </Button>
         {status === 'authenticated' && (
-          <Button onPress={handleFavoriteClick} isIconOnly variant='light'>
+          <Button
+            onPress={() => {
+              handleFavoriteClick()
+            }}
+            isIconOnly
+            variant='light'
+          >
             {isFavoriteProduct ? (
               <HeartSolidIcon className='text-red-500 h-6 w-6' />
             ) : (

@@ -1,5 +1,7 @@
 'use client'
 
+import { useCart } from '@/context/cart-context'
+import { useProducts } from '@/context/products-context'
 import { ShoppingCartIcon, TrashIcon } from '@heroicons/react/24/outline'
 import {
   Button,
@@ -17,11 +19,13 @@ import {
 import Image from 'next/image'
 import { FavoriteItemProps } from './types'
 
-export default function FavoriteItem({ id, name, price, image }: FavoriteItemProps) {
+export default function FavoriteItem({ name, price, image, productId }: FavoriteItemProps) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
+  const { addToCart } = useCart()
+  const { markAsFavorite } = useProducts()
 
   return (
-    <Card id={id} shadow='none' as='article' className='grid sm:grid-cols-cart-item items-center'>
+    <Card id={productId} shadow='none' as='article' className='grid sm:grid-cols-cart-item items-center'>
       <CardHeader>
         <figure className='w-full h-72 sm:w-28 sm:h-28 flex justify-center items-center rounded-xl border border-divider overflow-hidden'>
           <Image
@@ -37,7 +41,7 @@ export default function FavoriteItem({ id, name, price, image }: FavoriteItemPro
       <CardBody className='w-full grid gap-4 grid-flow-row auto-rows-max'>
         <div>
           <div className='lg:grid lg:grid-flow-col lg:gap-4 lg:auto-cols-max lg:justify-between'>
-            <Link href={id} color='foreground' underline='hover' className='text-sm  cursor-pointer'>
+            <Link href={productId} color='foreground' underline='hover' className='text-sm  cursor-pointer'>
               <h3 className='text-lg font-semibold'>{name}</h3>
             </Link>
             <span className='text-xl font-semibold'>$ {price}</span>
@@ -45,7 +49,12 @@ export default function FavoriteItem({ id, name, price, image }: FavoriteItemPro
         </div>
 
         <div className='grid gap-4 lg:grid-flow-col lg:auto-cols-max lg:justify-between'>
-          <Button color='primary' variant='flat' startContent={<ShoppingCartIcon className='h-5 w-5' />}>
+          <Button
+            onPress={() => addToCart(productId)}
+            color='primary'
+            variant='flat'
+            startContent={<ShoppingCartIcon className='h-5 w-5' />}
+          >
             Añadir al carrito
           </Button>
 
@@ -70,7 +79,14 @@ export default function FavoriteItem({ id, name, price, image }: FavoriteItemPro
                     <Button color='default' variant='light' onPress={onClose}>
                       Cancelar
                     </Button>
-                    <Button color='danger' variant='flat' onPress={onClose}>
+                    <Button
+                      color='danger'
+                      variant='flat'
+                      onPress={() => {
+                        onClose()
+                        markAsFavorite(productId, false)
+                      }}
+                    >
                       Eliminar
                     </Button>
                   </ModalFooter>
