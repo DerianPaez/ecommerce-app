@@ -8,8 +8,8 @@ export function ProductList() {
 
   return (
     <div className='grid grid-cols-product-auto-fill gap-4'>
-      {products.map(({ id, name, imageUrls, price, isFavorite }) => (
-        <ProductCard key={id} id={id} name={name} image={imageUrls[0]} price={price} isFavorite={isFavorite} />
+      {products.map(({ id, name, image, price, isFavorite }) => (
+        <ProductCard key={id} id={id} name={name} image={image} price={price} isFavorite={isFavorite} />
       ))}
     </div>
   )

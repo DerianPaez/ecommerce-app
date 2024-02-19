@@ -31,14 +31,14 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: 'Product already in favorites' }, { status: 400 })
     }
 
-    const newFavorite = await prisma.favorite.create({
+    await prisma.favorite.create({
       data: {
         product: {
           connect: {
             id: productId || undefined
           }
         },
-        User: {
+        user: {
           connect: {
             id: userId || undefined
           }
