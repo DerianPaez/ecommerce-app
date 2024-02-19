@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
             id: productId || undefined
           }
         },
-        User: {
+        user: {
           connect: {
             id: userId || undefined
           }
@@ -97,11 +97,17 @@ export async function DELETE(request: NextRequest) {
     return NextResponse.json({ message: 'Cart id invalid' }, { status: 400 })
   }
 
+  if (!userId) {
+    return NextResponse.json({ message: 'User not authenticated' }, { status: 401 })
+  }
+
   try {
     const existingCartItem = await prisma.cartItem.findUnique({
       where: {
-        productId,
-        userId
+        userId_productId: {
+          userId,
+          productId
+        }
       }
     })
 
@@ -111,7 +117,7 @@ export async function DELETE(request: NextRequest) {
 
     await prisma.cartItem.delete({
       where: {
-        productId: existingCartItem?.productId
+        id: existingCartItem.id
       }
     })
 

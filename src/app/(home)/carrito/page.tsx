@@ -13,16 +13,9 @@ export default function Cart() {
       <div className='grid gap-10 md:grid-cols-cart'>
         <Card shadow='none' className='border border-divider h-max'>
           <CardBody className='grid gap-4'>
-            {cart.map(({ id, product: { name, imageUrls, price }, productId, quantity }, index) => (
+            {cart.map(({ id, product: { name, image, price }, productId, quantity }, index) => (
               <Fragment key={id}>
-                <CartItem
-                  id={id}
-                  name={name}
-                  image={imageUrls[0]}
-                  price={price}
-                  productId={productId}
-                  quantity={quantity}
-                />
+                <CartItem id={id} name={name} image={image} price={price} productId={productId} quantity={quantity} />
                 {index !== cart.length - 1 && <Divider />}
               </Fragment>
             ))}

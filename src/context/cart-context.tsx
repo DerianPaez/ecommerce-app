@@ -161,7 +161,7 @@ export const CartProvider = ({ children }: CartContextProviderProps) => {
       quantity: 1,
       product,
       id: tempId,
-      userId: null,
+      userId: '',
       createdAt: new Date(),
       updatedAt: new Date()
     }
