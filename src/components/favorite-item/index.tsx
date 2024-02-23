@@ -1,8 +1,7 @@
 'use client'
 
-import { useCart } from '@/context/cart-context'
 import { useProducts } from '@/context/products-context'
-import { ShoppingCartIcon, TrashIcon } from '@heroicons/react/24/outline'
+import { TrashIcon } from '@heroicons/react/24/outline'
 import {
   Button,
   Card,
@@ -17,11 +16,11 @@ import {
   useDisclosure
 } from '@nextui-org/react'
 import Image from 'next/image'
+import AddToCart from '../add-to-cart'
 import { FavoriteItemProps } from './types'
 
 export default function FavoriteItem({ name, price, image, productId }: FavoriteItemProps) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
-  const { addToCart } = useCart()
   const { markAsFavorite } = useProducts()
 
   return (
@@ -49,14 +48,7 @@ export default function FavoriteItem({ name, price, image, productId }: Favorite
         </div>
 
         <div className='grid gap-4 lg:grid-flow-col lg:auto-cols-max lg:justify-between'>
-          <Button
-            onPress={() => addToCart(productId)}
-            color='primary'
-            variant='flat'
-            startContent={<ShoppingCartIcon className='h-5 w-5' />}
-          >
-            Añadir al carrito
-          </Button>
+          <AddToCart productId={productId} />
 
           <Button
             onPress={onOpen}
