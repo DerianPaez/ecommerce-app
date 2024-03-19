@@ -29,8 +29,7 @@ export default function Navigation() {
   const { data: session, status } = useSession()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const { cart } = useCart()
-  const { products } = useProducts()
-  const favoriteProducts = products.filter((product) => product.isFavorite)
+  const { favoriteItems } = useProducts()
 
   useEffect(() => {
     if (isMenuOpen) {
@@ -219,8 +218,8 @@ export default function Navigation() {
 
           {status === 'authenticated' && (
             <Badge
-              content={favoriteProducts.length}
-              isInvisible={favoriteProducts.length === 0}
+              content={favoriteItems.length}
+              isInvisible={favoriteItems.length === 0}
               variant='flat'
               shape='circle'
               showOutline={false}

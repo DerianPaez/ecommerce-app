@@ -76,7 +76,7 @@ export default function FavoriteItem({ name, price, image, productId }: Favorite
                       variant='flat'
                       onPress={() => {
                         onClose()
-                        markAsFavorite(productId, false)
+                        markAsFavorite({ productId, isFavorite: false })
                       }}
                     >
                       Eliminar
