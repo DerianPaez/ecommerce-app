@@ -20,7 +20,7 @@ export default function ProductCard({ id, image, name, price, isFavorite = false
   const debouncedFavorite = useDebounce(isFavoriteProduct)
 
   useEffect(() => {
-    if (isFavorite !== isFavoriteProduct) markAsFavorite(id, debouncedFavorite)
+    if (isFavorite !== isFavoriteProduct) markAsFavorite({ productId: id, isFavorite: debouncedFavorite })
   }, [debouncedFavorite])
 
   const handleFavoriteClick = () => {
