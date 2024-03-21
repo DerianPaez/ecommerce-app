@@ -17,6 +17,11 @@ type CartItemUi = CartItem & {
 
 type CartContext = {
   cart: CartItemUi[]
+  total: number
+  subtotal: number
+  shippingCost: number
+  tax: number
+  discount: number
   addToCart: (productId: string) => Promise<void>
   loadCart: () => Promise<void>
   removeFromCart: (cartId: string) => Promise<void>
@@ -27,6 +32,11 @@ export const CartContext = createContext<CartContext | null>(null)
 
 export const CartProvider = ({ children }: CartContextProviderProps) => {
   const [cart, setCart] = useState<CartItemUi[]>([])
+  const [subtotal, setSubtotal] = useState(0)
+  const [shippingCost, setShippingCost] = useState(0)
+  const [discount, setDiscount] = useState(0)
+  const [tax, setTax] = useState(subtotal * 0.12)
+  const [total, setTotal] = useState(subtotal + shippingCost + tax)
   const { status } = useSession()
   const { products } = useProducts()
   const { dispatch } = useGlobal()
@@ -34,6 +44,16 @@ export const CartProvider = ({ children }: CartContextProviderProps) => {
   useEffect(() => {
     loadCart()
   }, [status])
+
+  useEffect(() => {
+    const subtotalCalc = cart.reduce((acc, { product: { price }, quantity }) => acc + price * quantity, 0)
+    const taxCalc = subtotalCalc * 0.12
+    const totalCalc = subtotalCalc + shippingCost + taxCalc
+
+    setSubtotal(subtotalCalc)
+    setTax(taxCalc)
+    setTotal(totalCalc)
+  }, [cart])
 
   const loadCart = async () => {
     const localStorageCart: CartItemUi[] = JSON.parse(localStorage.getItem('cart') || '[]')
@@ -254,7 +274,20 @@ export const CartProvider = ({ children }: CartContextProviderProps) => {
   }
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, loadCart, removeFromCart, updateQuantity }}>
+    <CartContext.Provider
+      value={{
+        cart,
+        total,
+        subtotal,
+        shippingCost,
+        tax,
+        discount,
+        addToCart,
+        loadCart,
+        removeFromCart,
+        updateQuantity
+      }}
+    >
       {children}
     </CartContext.Provider>
   )

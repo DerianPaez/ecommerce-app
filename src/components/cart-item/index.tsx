@@ -52,7 +52,11 @@ export default function CartItem({ id, name, price, image, productId, quantity }
             </Link>
             <span className='text-xl font-semibold'>$ {Number((price * count).toFixed(2))}</span>
           </div>
-          {price !== Number((price * count).toFixed(2)) && <span>$ {price}</span>}
+          {price !== Number((price * count).toFixed(2)) && (
+            <span>
+              <small>P. Unitario</small> $ {price}
+            </span>
+          )}
         </div>
 
         <div className='grid gap-2 grid-flow-col auto-cols-max justify-between'>

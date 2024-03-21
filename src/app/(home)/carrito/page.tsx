@@ -7,7 +7,8 @@ import { Card, CardBody, Divider } from '@nextui-org/react'
 import { Fragment } from 'react'
 
 export default function Cart() {
-  const { cart } = useCart()
+  const { cart, total, subtotal, shippingCost, tax, discount } = useCart()
+
   return (
     <div className='p-4 md:px-10 py-10'>
       <div className='grid gap-10 md:grid-cols-cart'>
@@ -28,9 +29,11 @@ export default function Cart() {
 
         <CartSummary
           className='w-full md:w-[240px] lg:w-[320px] h-max'
-          subtotal={1179.95}
-          shipping={50.0}
-          total={1229.95}
+          subtotal={subtotal}
+          shipping={shippingCost}
+          discount={discount}
+          total={total}
+          tax={tax}
         />
       </div>
     </div>
