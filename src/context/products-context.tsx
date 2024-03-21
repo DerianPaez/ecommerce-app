@@ -4,6 +4,8 @@ import { favoriteService } from '@/services/favorite-service'
 import { productService } from '@/services/product-service'
 import { Favorite, Product } from '@prisma/client'
 import { createContext, useContext, useEffect, useState } from 'react'
+import { useGlobal } from './global/global.context'
+import { GlobalActions } from './global/types'
 
 type ProductContextProviderProps = {
   children: React.ReactNode
@@ -30,6 +32,8 @@ export const ProductProvider = ({ children, initialProducts, totalProducts }: Pr
   const [total] = useState(totalProducts)
   const [favoriteItems, setFavoriteItems] = useState<FavoriteWithProduct[]>([])
 
+  const { dispatch } = useGlobal()
+
   useEffect(() => {
     loadFavoriteItems()
   }, [])
@@ -39,7 +43,14 @@ export const ProductProvider = ({ children, initialProducts, totalProducts }: Pr
       const favorites = await favoriteService.getFavoriteItems()
       setFavoriteItems(favorites)
     } catch (error) {
-      console.log('Error al cargar favoritos', error)
+      dispatch({
+        type: GlobalActions.showNotification,
+        payload: {
+          message:
+            'Ups, tuvimos un problema al cargar los productos favoritos. Por favor, intenta nuevamente en unos minutos.',
+          notificationType: 'error'
+        }
+      })
     }
   }
 
@@ -48,7 +59,13 @@ export const ProductProvider = ({ children, initialProducts, totalProducts }: Pr
       const newProducts = await productService.getProducts({ skip, take })
       setProducts([...products, ...newProducts])
     } catch (error) {
-      console.log('Error al cargar productos', error)
+      dispatch({
+        type: GlobalActions.showNotification,
+        payload: {
+          message: 'Ups, tuvimos un problema al cargar los productos. Por favor, intenta nuevamente en unos minutos.',
+          notificationType: 'error'
+        }
+      })
     }
   }
 
@@ -66,7 +83,14 @@ export const ProductProvider = ({ children, initialProducts, totalProducts }: Pr
       const productToUpdate = products.find((product) => product.id === productId)
 
       if (!productToUpdate) {
-        // TODO: handle error correctly - Snackbar
+        dispatch({
+          type: GlobalActions.showNotification,
+          payload: {
+            message:
+              'Ups, parece ser que el producto que marcaste como favorito no existe. Por favor, intenta nuevamente en unos minutos.',
+            notificationType: 'error'
+          }
+        })
         return
       }
 
@@ -92,8 +116,15 @@ export const ProductProvider = ({ children, initialProducts, totalProducts }: Pr
     try {
       await favoriteService.toggleFavorite({ productId })
     } catch (error) {
+      dispatch({
+        type: GlobalActions.showNotification,
+        payload: {
+          message:
+            'Ups, tuvimos un problema al marcar o desmarcar el producto como favorito. Por favor, intenta nuevamente en unos minutos.',
+          notificationType: 'error'
+        }
+      })
       setProducts(prevProducts)
-      console.log('Error al cargar favoritos', error)
     }
   }
 

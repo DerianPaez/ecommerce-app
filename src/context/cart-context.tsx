@@ -3,6 +3,8 @@
 import { CartItem, Product } from '@prisma/client'
 import { useSession } from 'next-auth/react'
 import { createContext, useContext, useEffect, useState } from 'react'
+import { useGlobal } from './global/global.context'
+import { GlobalActions } from './global/types'
 import { useProducts } from './products-context'
 
 type CartContextProviderProps = {
@@ -27,6 +29,7 @@ export const CartProvider = ({ children }: CartContextProviderProps) => {
   const [cart, setCart] = useState<CartItemUi[]>([])
   const { status } = useSession()
   const { products } = useProducts()
+  const { dispatch } = useGlobal()
 
   useEffect(() => {
     loadCart()
@@ -52,7 +55,14 @@ export const CartProvider = ({ children }: CartContextProviderProps) => {
 
         await syncCart(localStorageCart, serverCart)
       } catch (error) {
-        console.error('Error al cargar el carrito', error)
+        dispatch({
+          type: GlobalActions.showNotification,
+          payload: {
+            message:
+              'Ups, tuvimos un problema al intentar cargar tu carrito de compras. Por favor, intenta nuevamente en unos minutos.',
+            notificationType: 'error'
+          }
+        })
       }
     }
   }
@@ -84,7 +94,14 @@ export const CartProvider = ({ children }: CartContextProviderProps) => {
       await fetch(`/api/cart`, { method: 'PUT', body: JSON.stringify(combinedCart) })
       localStorage.removeItem('cart')
     } catch (error) {
-      console.error('Error al sincronizar el carrito', error)
+      dispatch({
+        type: GlobalActions.showNotification,
+        payload: {
+          message:
+            'Ups, tuvimos un problema al intentar sincronizar tu carrito de compras. Por favor, intenta nuevamente en unos minutos.',
+          notificationType: 'error'
+        }
+      })
       setCart((cart) =>
         cart.filter((item) => !localStorageCart.some((localItem) => localItem.productId === item.productId))
       )
@@ -119,7 +136,14 @@ export const CartProvider = ({ children }: CartContextProviderProps) => {
         body: JSON.stringify({ updatedCart })
       })
     } catch (error) {
-      console.error('Error al actualizar la cantidad del carrito', error)
+      dispatch({
+        type: GlobalActions.showNotification,
+        payload: {
+          message:
+            'Ups, tuvimos un problema al actualizar la cantidad del carrito de compras. Por favor, intenta nuevamente en unos minutos.',
+          notificationType: 'error'
+        }
+      })
       setCart(prevCart)
     }
   }
@@ -142,7 +166,14 @@ export const CartProvider = ({ children }: CartContextProviderProps) => {
       try {
         await fetch(`/api/cart?productId=${productId}`, { method: 'POST' })
       } catch (error) {
-        console.error('Error al agregar al carrito', error)
+        dispatch({
+          type: GlobalActions.showNotification,
+          payload: {
+            message:
+              'Ups, tuvimos un problema al agregar el producto al carrito de compras. Por favor, intenta nuevamente en unos minutos.',
+            notificationType: 'error'
+          }
+        })
         setCart(prevCart)
       }
       return
@@ -184,8 +215,15 @@ export const CartProvider = ({ children }: CartContextProviderProps) => {
 
       localStorage.setItem('cart', JSON.stringify(newCart))
     } catch (error) {
+      dispatch({
+        type: GlobalActions.showNotification,
+        payload: {
+          message:
+            'Ups, tuvimos un problema al agregar el producto al carrito de compras. Por favor, intenta nuevamente en unos minutos.',
+          notificationType: 'error'
+        }
+      })
       setCart(prevCart)
-      console.error('Error al agregar al carrito', error)
     }
   }
 
@@ -203,7 +241,14 @@ export const CartProvider = ({ children }: CartContextProviderProps) => {
     try {
       await fetch(`/api/cart?productId=${productId}`, { method: 'DELETE' })
     } catch (error) {
-      console.error('Error al eliminar del carrito', error)
+      dispatch({
+        type: GlobalActions.showNotification,
+        payload: {
+          message:
+            'Ups, tuvimos un problema al eliminar el producto del carrito de compras. Por favor, intenta nuevamente en unos minutos.',
+          notificationType: 'error'
+        }
+      })
       setCart(prevCart)
     }
   }

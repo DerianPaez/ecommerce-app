@@ -1,6 +1,7 @@
 'use client'
 
 import { CartProvider } from '@/context/cart-context'
+import { GlobalProvider } from '@/context/global/global.context'
 import { ProductProvider, ProductUi } from '@/context/products-context'
 import { NextUIProvider } from '@nextui-org/react'
 import { SessionProvider } from 'next-auth/react'
@@ -21,9 +22,11 @@ export function Providers({
     <SessionProvider>
       <NextUIProvider navigate={router.push}>
         <ThemeProvider attribute='class' themes={['light', 'dark']} enableSystem={true}>
-          <ProductProvider initialProducts={products} totalProducts={totalProducts}>
-            <CartProvider>{children}</CartProvider>
-          </ProductProvider>
+          <GlobalProvider>
+            <ProductProvider initialProducts={products} totalProducts={totalProducts}>
+              <CartProvider>{children}</CartProvider>
+            </ProductProvider>
+          </GlobalProvider>
         </ThemeProvider>
       </NextUIProvider>
     </SessionProvider>
